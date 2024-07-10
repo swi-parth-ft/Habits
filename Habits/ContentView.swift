@@ -49,7 +49,9 @@ struct ContentView: View {
                         NavigationLink(value: activity) {
                             Text(activity.title)
                                 .font(.headline)
+                                
                         }
+                        .listRowBackground(Color.green.opacity(activity.count < 5 ? 0.2 : (activity.count < 15 && activity.count > 5) ? 0.6 : 0.8))
                         
                     }
                     .onDelete(perform: removeItems)
@@ -107,6 +109,7 @@ struct AddView: View {
                 dismiss()
             }
             .buttonStyle()
+            .padding()
         }
     }
 }
