@@ -63,6 +63,7 @@ struct ContentView: View {
                     Button("Add") {
                         isAddFormVisible = true
                     }
+                    .buttonStyle()
                 
             }
             .sheet(isPresented: $isAddFormVisible) {
@@ -71,6 +72,7 @@ struct ContentView: View {
                     .presentationDetents([.fraction(0.4), .medium, .large])
             }
         }
+        .preferredColorScheme(.dark)
     }
 }
 
@@ -85,14 +87,46 @@ struct AddView: View {
     
     var body: some View {
         VStack {
-            TextField("Title", text: $title)
-            TextField("Description", text: $description)
-            Button("Save") {
-                let activity = Activity(title: title, description: description)
-                activities.activities.append(activity)
-                dismiss()
+            Form {
+                TextField("Title", text: $title)
+                TextField("Description", text: $description)
+                Button("Save") {
+                    let activity = Activity(title: title, description: description)
+                    activities.activities.append(activity)
+                    dismiss()
+                }
             }
         }
+    }
+}
+
+struct ButtonViewModifier: ViewModifier {
+    
+    func body(content: Content) -> some View {
+        content
+        .buttonStyle(.borderedProminent)
+        .tint(Color(hex: 0x9dd44f).opacity(0.9))
+        .cornerRadius(20)
+        .shadow(radius: 10)
+    }
+}
+
+extension View {
+    func buttonStyle() -> some View {
+        modifier(ButtonViewModifier())
+    }
+}
+
+
+extension Color {
+    init(hex: Int, opacity: Double = 1) {
+        self.init(
+            .sRGB,
+            red: Double((hex >> 16) & 0xff) / 255,
+            green: Double((hex >> 08) & 0xff) / 255,
+            blue: Double((hex >> 00) & 0xff) / 255,
+            opacity: opacity
+        )
     }
 }
 
