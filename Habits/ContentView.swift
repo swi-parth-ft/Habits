@@ -70,7 +70,7 @@ struct ContentView: View {
             .sheet(isPresented: $isAddFormVisible) {
                 // show an AddView here
                 AddView(activities: activities)
-                    .presentationDetents([.fraction(0.4), .medium, .large])
+                    .presentationDetents([.fraction(0.3), .medium, .large])
             }
         }
         .preferredColorScheme(.dark)
@@ -93,14 +93,20 @@ struct AddView: View {
     var body: some View {
         VStack {
             Form {
-                TextField("Title", text: $title)
-                TextField("Description", text: $description)
-                Button("Save") {
-                    let activity = Activity(title: title, description: description)
-                    activities.activities.append(activity)
-                    dismiss()
+                Section("Add Activity") {
+                    TextField("Title", text: $title)
+                    TextField("Description", text: $description)
                 }
+                
             }
+            .tint(Color(hex: 0x9dd44f))
+            
+            Button("Save") {
+                let activity = Activity(title: title, description: description)
+                activities.activities.append(activity)
+                dismiss()
+            }
+            .buttonStyle()
         }
     }
 }
