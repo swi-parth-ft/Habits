@@ -52,6 +52,7 @@ struct ContentView: View {
                         }
                         
                     }
+                    .onDelete(perform: removeItems)
                 }
                     .navigationDestination(for: Activity.self) { activity in
                         ActivityView(activity: activity, hub: activities)
@@ -73,6 +74,10 @@ struct ContentView: View {
             }
         }
         .preferredColorScheme(.dark)
+    }
+    
+    func removeItems(at offsets: IndexSet) {
+        activities.activities.remove(atOffsets: offsets)
     }
 }
 
